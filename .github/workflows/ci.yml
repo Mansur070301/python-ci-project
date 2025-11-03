@@ -1,28 +1,31 @@
-name: Python CI
+name: Python CI Pipeline Alpha
 
 on:
+  # Workflow push оқиғасы кезінде іске қосылуы керек
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches:
+      - main  # Немесе сіз қолданатын негізгі тармақтың атауы (master, develop)
 
 jobs:
   build-and-test:
+    # Тапсырма ubuntu-latest ортасында орындалуы тиіс
     runs-on: ubuntu-latest
 
     steps:
-    - name: ⬇️ Кодты алу
-      uses: actions/checkout@v4
+      - name: ⬇️ Кодты алу (Checkout)
+        # uses: actions/checkout@v4 қолдану
+        uses: actions/checkout@v4
 
-    - name: 🐍 Python Ортасын Баптау
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: 🐍 Python Ортасын Баптау
+        # uses: actions/setup-python@v5 және python-version: '3.10'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: 🛠️ Тәуелділіктерді Орнату
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: ⚙️ Тәуелділіктерді Орнату
+        # run: pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-    - name: 🚀 Тесттерді Іске Қосу
-      run: pytest
+      - name: ✅ Тесттерді Іске Қосу
+        # run: pytest командасын қолдану
+        run: pytest
